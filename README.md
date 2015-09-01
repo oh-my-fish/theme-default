@@ -22,7 +22,7 @@ $ omf theme default
 ## Screenshot
 
 <p align="center">
-<img src="https://cloud.githubusercontent.com/assets/526122/9554176/e3fffb44-4dbb-11e5-88c7-57f2b35ad2b8.png">
+<img src="https://cloud.githubusercontent.com/assets/526122/9604024/ac338638-50ac-11e5-874a-70fa9287db93.png">
 </p>
 
 ## Configuration
