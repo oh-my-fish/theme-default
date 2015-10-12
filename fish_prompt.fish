@@ -1,12 +1,12 @@
 # You can override some default options with config.fish:
 #
-#  set -g theme_short_path yes
+#  set -g theme_short_path
 
 function fish_prompt
   set -l last_command_status $status
   set -l cwd
 
-  if test "$theme_short_path" = 'yes'
+  if set -q theme_short_path
     set cwd (basename (prompt_pwd))
   else
     set cwd (prompt_pwd)
@@ -19,39 +19,34 @@ function fish_prompt
   set -l dirty    "⨯"
   set -l none     "◦"
 
-  set -l normal_color     (set_color normal)
-  set -l success_color    (set_color $fish_pager_color_progress ^/dev/null; or set_color cyan)
-  set -l error_color      (set_color $fish_color_error ^/dev/null; or set_color red --bold)
-  set -l directory_color  (set_color $fish_color_quote ^/dev/null; or set_color brown)
-  set -l repository_color (set_color $fish_color_cwd ^/dev/null; or set_color green)
+  set -l success    (printf $fish_pager_color_progress ^/dev/null; or echo cyan)
+  set -l error      (printf $fish_color_error ^/dev/null; or echo red --bold)
+  set -l directory  (printf $fish_color_quote ^/dev/null; or echo brown)
+  set -l repository (printf $fish_color_cwd ^/dev/null; or echo green)
 
   if test $last_command_status -eq 0
-    echo -n -s $success_color $fish $normal_color
+    tint: $success $fish
   else
-    echo -n -s $error_color $fish $normal_color
+    tint: $error $fish
   end
 
-  if git_is_repo
-    if test "$theme_short_path" = 'yes'
-      set root_folder (command git rev-parse --show-toplevel ^/dev/null)
+  if vcs.present
+    if set -q theme_short_path
+      set root_folder (vcs.root)
       set parent_root_folder (dirname $root_folder)
       set cwd (echo $PWD | sed -e "s|$parent_root_folder/||")
-
-      echo -n -s " " $directory_color $cwd $normal_color
-    else
-      echo -n -s " " $directory_color $cwd $normal_color
     end
 
-    echo -n -s " on " $repository_color (git_branch_name) $normal_color " "
+    inline: " "(tint: $directory $cwd)" on "(tint: $repository (vcs.branch))" "
 
-    if git_is_touched
-      echo -n -s $dirty
+    if vcs.touched
+      inline: $dirty
     else
-      echo -n -s (git_ahead $ahead $behind $diverged $none)
+      inline: (vcs.status $ahead $behind $diverged $none)
     end
   else
-    echo -n -s " " $directory_color $cwd $normal_color
+    tint: $directory $cwd
   end
 
-  echo -n -s " "
+  inline: " "
 end
