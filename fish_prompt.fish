@@ -7,7 +7,7 @@ set _color_error      (printf $fish_color_error ^/dev/null; or echo red --bold)
 set _color_directory  (printf $fish_color_quote ^/dev/null; or echo brown)
 set _color_repository (printf $fish_color_cwd ^/dev/null; or echo green)
 
-set _prompt_fish         "⋊>"
+set _prompt_fish         (test (uname) = Darwin; and echo "⋊>"; or echo "⋊ >")
 set _prompt_vcs_clean    "○"
 set _prompt_vcs_touched  "●"
 set _prompt_vcs_ahead    "↑"
