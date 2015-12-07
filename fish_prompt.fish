@@ -32,9 +32,9 @@ function fish_prompt
   end
 
   if test $last_command_status -eq 0
-    tint: $_color_success $_prompt_fish
+    tint: $_color_success "$_prompt_fish "
   else
-    tint: $_color_error $_prompt_fish
+    tint: $_color_error "$_prompt_fish "
   end
 
   if vcs.present
@@ -44,7 +44,7 @@ function fish_prompt
       set cwd (echo $PWD | sed -e "s|$parent_root_folder/||")
     end
 
-    inline: " "(tint: $_color_directory $cwd)" on "(tint: $_color_repository (vcs.branch))" "
+    inline: (tint: $_color_directory $cwd)" on "(tint: $_color_repository (vcs.branch))" "
 
     if vcs.touched
       inline: $_prompt_vcs_touched
