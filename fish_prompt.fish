@@ -51,6 +51,13 @@ function fish_prompt
     end
   else
     echo -n -s " " $directory_color $cwd $normal_color
+
+    # check for mercurial
+    set -l hg_repo_root_var (hg_repo_root)
+    if test -n "$hg_repo_root_var"
+      echo -n -s " on " $repository_color (hg_branch_or_bookmark_name $hg_repo_root_var) $normal_color
+    end
+
   end
 
   echo -n -s " "
