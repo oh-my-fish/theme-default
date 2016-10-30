@@ -44,7 +44,13 @@ function fish_prompt
       set cwd (echo $PWD | sed -e "s|$parent_root_folder/||")
     end
 
-    inline: (tint: $_color_directory $cwd)" on "(tint: $_color_repository (vcs.branch))" "
+    inline: (tint: $_color_directory $cwd)
+
+    test (tput cols) -lt 80
+      and printf '\n'
+      or inline: ' '
+
+    inline: "on "(tint: $_color_repository (vcs.branch))" "
 
     if vcs.touched
       inline: $_prompt_vcs_touched
@@ -56,4 +62,5 @@ function fish_prompt
   end
 
   inline: " "
+
 end
