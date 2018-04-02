@@ -24,6 +24,18 @@ function fish_prompt
   set -l error_color      (set_color $fish_color_error ^/dev/null; or set_color red --bold)
   set -l directory_color  (set_color $fish_color_quote ^/dev/null; or set_color brown)
   set -l repository_color (set_color $fish_color_cwd ^/dev/null; or set_color green)
+  
+  if command -v pyenv >/dev/null 2>&1 # check if pyenv is installed
+    # more info: https://github.com/yyuu/pyenv#choosing-the-python-version
+    if test -n "$PYENV_VERSION"
+      echo -n -s "(pyenv $PYENV_VERSION) "
+    else
+      set -l pyenv_local (pyenv local ^/dev/null) # get current directory-specific version (will exit>0 if none set)
+      if test $status -eq 0
+        echo -n -s "(pyenv $pyenv_local) "
+      end
+    end
+  end
 
   if test $last_command_status -eq 0
     echo -n -s $success_color $fish $normal_color
