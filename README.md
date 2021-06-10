@@ -40,7 +40,7 @@ Only display the folder name:
 [mit]:            http://opensource.org/licenses/MIT
 [author]:         http://github.com/bpinto
 [contributors]:   https://github.com/oh-my-fish/theme-default/graphs/contributors
-[omf-link]:       https://www.github.com/fish-shell/oh-my-fish
+[omf-link]:       https://www.github.com/oh-my-fish/oh-my-fish
 
 [license-badge]:  https://img.shields.io/badge/license-MIT-007EC7.svg?style=flat-square
 [travis-badge]:   http://img.shields.io/travis/oh-my-fish/theme-default.svg?style=flat-square
