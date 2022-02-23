@@ -43,10 +43,12 @@ function fish_prompt
     echo -n -s " " $directory_color $cwd $normal_color
     echo -n -s " on " $repository_color (git_branch_name) $normal_color " "
 
-    if git_is_touched
-      echo -n -s $dirty
+    if git_is_touched; and test "$theme_stash_indicator" = 'yes'; and git_is_stashed
+      echo -n -s $stash " " $dirty
     else if test "$theme_stash_indicator" = 'yes'; and git_is_stashed
       echo -n -s $stash
+    else if git_is_touched
+      echo -n -s $dirty
     else
       echo -n -s (git_ahead $ahead $behind $diverged $none)
     end
