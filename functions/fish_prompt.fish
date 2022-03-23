@@ -1,6 +1,7 @@
 # You can override some default options with config.fish:
 #
 #  set -g theme_short_path yes
+#  set -g theme_stash_indicator yes
 
 function fish_prompt
   set -l last_command_status $status
@@ -15,8 +16,9 @@ function fish_prompt
   set -l fish     "⋊>"
   set -l ahead    "↑"
   set -l behind   "↓"
-  set -l diverged "⥄ "
+  set -l diverged "⥄"
   set -l dirty    "⨯"
+  set -l stash    "≡"
   set -l none     "◦"
 
   set -l normal_color     (set_color normal)
@@ -41,9 +43,17 @@ function fish_prompt
     echo -n -s " " $directory_color $cwd $normal_color
     echo -n -s " on " $repository_color (git_branch_name) $normal_color " "
 
+
+    set -l list
+    if test "$theme_stash_indicator" = yes; and git_is_stashed
+      set list $list $stash
+    end
     if git_is_touched
-      echo -n -s $dirty
-    else
+      set list $list $dirty
+    end
+    echo -n $list
+
+    if test -z "$list"
       echo -n -s (git_ahead $ahead $behind $diverged $none)
     end
   else
