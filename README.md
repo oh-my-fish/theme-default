@@ -37,6 +37,11 @@ Display `git stash` indicator:
   set -g theme_stash_indicator yes
 ```
 
+Hide the right prompt:
+```
+  set -g theme_hide_right_prompt yes
+```
+
 # License
 
 [MIT][mit] © [bpinto][author] et [al][contributors]
