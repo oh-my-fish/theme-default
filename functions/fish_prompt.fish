@@ -29,17 +29,9 @@ function fish_prompt
   set -l repository_color (set_color $fish_color_cwd 2> /dev/null; or set_color green)
 
   set -l prompt_string $fish
-  set -l append_final_fish no
 
-  if test "$theme_ignore_ssh_awareness" != 'yes'
-    if test -n "$SSH_CLIENT" || test -n "$SSH_TTY"
-      set prompt_string "$prompt_string" (whoami)"@"(hostname -s)
-      set append_final_fish yes
-    end
-  end
-
-  if test "$append_final_fish" = 'yes'
-    set prompt_string "$prompt_string $fish"
+  if test "$theme_ignore_ssh_awareness" != 'yes' -a -n "$SSH_CLIENT$SSH_TTY"
+    set prompt_string "$prompt_string "(whoami)"@"(hostname -s)" $fish"
   end
 
   if test $last_command_status -eq 0
