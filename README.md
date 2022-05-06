@@ -37,7 +37,7 @@ Display `git stash` indicator:
   set -g theme_stash_indicator yes
 ```
 
-Do not display the `user at hostname` when in an SSH session:
+Do not display `user@hostname` when in an SSH session:
 ```
   set -g theme_ignore_ssh_awareness yes
 ```
