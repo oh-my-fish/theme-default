@@ -2,6 +2,7 @@
 #
 #  set -g theme_short_path yes
 #  set -g theme_stash_indicator yes
+#  set -g theme_ignore_ssh_awareness yes
 
 function fish_prompt
   set -l last_command_status $status
@@ -27,10 +28,16 @@ function fish_prompt
   set -l directory_color  (set_color $fish_color_quote 2> /dev/null; or set_color brown)
   set -l repository_color (set_color $fish_color_cwd 2> /dev/null; or set_color green)
 
+  set -l prompt_string $fish
+
+  if test "$theme_ignore_ssh_awareness" != 'yes' -a -n "$SSH_CLIENT$SSH_TTY"
+    set prompt_string "$fish "(whoami)"@"(hostname -s)" $fish"
+  end
+
   if test $last_command_status -eq 0
-    echo -n -s $success_color $fish $normal_color
+    echo -n -s $success_color $prompt_string $normal_color
   else
-    echo -n -s $error_color $fish $normal_color
+    echo -n -s $error_color $prompt_string $normal_color
   end
 
   if git_is_repo
