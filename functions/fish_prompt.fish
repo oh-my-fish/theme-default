@@ -31,7 +31,7 @@ function fish_prompt
   set -l prompt_string $fish
 
   if test "$theme_ignore_ssh_awareness" != 'yes' -a -n "$SSH_CLIENT$SSH_TTY"
-    set prompt_string "$prompt_string "(whoami)"@"(hostname -s)" $fish"
+    set prompt_string "$fish "(whoami)"@"(hostname -s)" $fish"
   end
 
   if test $last_command_status -eq 0
